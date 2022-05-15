@@ -1,1 +1,36 @@
-<p>load works!</p>
+<div class="row">
+  <div class="col-md-4">
+    <h3 class="text-info mb-4">Select your files...</h3>
+    <div class="well drop-zone" NgDropFiles [ngClass]="{'file-over': isOverDropZone }"
+          (OnMouseOver)="updateIsOverDropZone( $event )" [files]="files">
+      <h4>Drop your files here...</h4>
+      <img src="/assets/img/drop-images.png" alt="droppable zone">
+    </div>
+  </div>
+  <div class="col-md-8">
+    <h4 class="mb-2"> Load files</h4>
+    <button class="btn btn-success" type="button" (click)="load_images()" [disabled]="files.length === 0">Load to firebase</button>
+    <button class="btn btn-danger" type="button" *ngIf="files.length !== 0" (click)="clearFiles()">Clear</button>
+
+    <table class="table">
+      <thead class="thead=dark">
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Progress</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of files">
+          <td>{{file.fileName}}</td>
+          <td>{{file.file.size / 1024 / 1024 |number:'.2-2'}} MB</td>
+          <td>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width': file.progress + '%'}"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
